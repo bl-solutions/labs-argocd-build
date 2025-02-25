@@ -86,3 +86,12 @@ jobs:
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
         run: echo "${TAGS}" | xargs -I {} cosign sign --yes {}@${DIGEST}
+
+      - name: Trigger deployment workflow
+        if: success()
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.PAT }}
+          repository: bl-solutions/labs-argocd-deploy
+          event-type: build-success
+          client-payload: '{"image_tag": "${{ steps.meta.outputs.tags }}", "ref": "${{ github.ref }}"}'
