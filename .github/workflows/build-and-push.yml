@@ -94,4 +94,4 @@ jobs:
           token: ${{ secrets.PAT }}
           repository: bl-solutions/labs-argocd-deploy
           event-type: build-success
-          client-payload: '{"image_tag": "${{ steps.meta.outputs.tags }}", "ref": "${{ github.ref }}"}'
+          client-payload: '{"image_tag": "${{ steps.meta.outputs.version }}", "ref": "${{ github.ref }}"}'
